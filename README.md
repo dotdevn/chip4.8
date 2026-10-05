@@ -1,16 +1,53 @@
-# CHIP 4.8: Hello Rails!
+# RottenPotatoes — CHIP 4.8
 
-## Introduction
+A Rails 7.2 movie catalog with create, read, update, delete, and index actions.
+Movie records store a title, rating, description, release date, and timestamps.
+The home page redirects to `/movies`.
 
-In previous assignments, you created and deployed a simple Wordguesser game using the Ruby-based Sinatra framework, and in the subsequent assignment, you explored the differences between the Rails and Sinatra versions of that same app.
+## Run locally
 
-In this assignment you will create your first Rails app from scratch: a simple app called RottenPotatoes (inspired by the real web site RottenTomatoes) for cataloging movies. RottenPotatoes lets users interactively (via a Web browser) create database entries for new movies, view or modify the content of movie records (movie title, rating, description, and so on), and delete movie records.  We provide some starter code you can copy and paste into specific files, but you will do most of the work.  When the app is running, you'll deploy it on the public cloud.
+The provided development Dockerfile uses Ruby 3.3.8 and Rails 7.x:
 
-In later assignments, you'll add features to the app, such as the ability to filter the list of movies, the ability to associate reviews with movies, and per-user login so each user can maintain their own ratings of movies.
+```sh
+docker build -t rottenpotatoes .
+docker run --rm -it -p 3000:3000 -v "$(pwd)":/app rottenpotatoes
+```
 
-## Parts
-- [Part 1 - Set Up / Getting Started](Part-1.md)
-- [Part 2 - Database in different environments](Part-2.md)
-- [Part 3 - Routes](Part-3.md)
-- [Part 4 - Change the database for production](Part-4.md)
-- [Part 5 - Submitting your work](Part-5.md)
+Inside the container:
+
+```sh
+bundle config set without 'production'
+bundle install
+bundle exec rails db:prepare
+bundle exec rails server -b 0.0.0.0
+```
+
+Open `http://localhost:3000`. Stop the server with Ctrl+C.
+Development and test use separate SQLite databases; production uses PostgreSQL
+through `DATABASE_URL`.
+
+## Verify
+
+```sh
+bundle exec rails db:test:prepare
+bundle exec rspec
+```
+
+The request suite checks the movie forms and all CRUD actions, strong parameters,
+HTML escaping, missing-record responses, the deployment health check, and seed
+idempotence. The four starter movies are Aladdin, When Harry Met Sally, The Help,
+and Raiders of the Lost Ark.
+
+## Deploy and submit
+
+See [DEPLOYMENT.md](DEPLOYMENT.md) for the included Render Blueprint and Heroku
+Procfile. **A live public deployment is required.** Upload a URL-only file named
+`rottenpotatoes-url.txt` to Gradescope; pushing the code alone is insufficient.
+
+## Original assignment
+
+- [Part 1 — setup](Part-1.md)
+- [Part 2 — databases](Part-2.md)
+- [Part 3 — routes and CRUD](Part-3.md)
+- [Part 4 — deployment](Part-4.md)
+- [Part 5 — submission](Part-5.md)
