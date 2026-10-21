@@ -90,17 +90,19 @@ RSpec.describe "RottenPotatoes movies", type: :request do
     expect(response).to have_http_status(:ok)
   end
 
-  it "seeds the four assigned movies without duplicating or overwriting them" do
+  it "seeds the ten assigned movies without duplicating or overwriting them" do
+    Movie.delete_all
     Rails.application.load_seed
-    expect(Movie.count).to eq(4)
+    expect(Movie.count).to eq(10)
     expect(Movie.pluck(:title)).to contain_exactly(
-      "Aladdin", "When Harry Met Sally", "The Help", "Raiders of the Lost Ark"
+      "Aladdin", "The Terminator", "When Harry Met Sally", "The Help", "Chocolat",
+      "Amelie", "2001: A Space Odyssey", "The Incredibles", "Raiders of the Lost Ark", "Chicken Run"
     )
     aladdin = Movie.find_by!(title: "Aladdin")
     expect(aladdin.release_date.to_date).to eq(Date.new(1992, 11, 25))
     aladdin.update!(description: "A user edit")
     Rails.application.load_seed
-    expect(Movie.count).to eq(4)
+    expect(Movie.count).to eq(10)
     expect(aladdin.reload.description).to eq("A user edit")
   end
 end

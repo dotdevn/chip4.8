@@ -51,3 +51,8 @@ Procfile. **A live public deployment is required.** Upload a URL-only file named
 - [Part 3 — routes and CRUD](Part-3.md)
 - [Part 4 — deployment](Part-4.md)
 - [Part 5 — submission](Part-5.md)
+
+
+## CHIP 5.3 deployment
+
+This existing Render service now also hosts the rating filters, title/release-date sorting, and saved session preferences completed in [chips5.3](https://github.com/dotdevn/chips5.3). The original movie CRUD features and PostgreSQL connection are retained.
