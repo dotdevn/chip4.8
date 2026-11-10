@@ -20,7 +20,7 @@ group :development do
 end
 
 group :test do
-  gem "rspec-rails", "~> 7.1"
+  gem "rspec-rails", "~> 8.1"
 end
 
 group :production do
